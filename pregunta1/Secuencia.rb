@@ -8,6 +8,11 @@ Arroja un error si está vacía.
 • vacio: Dice si la secuencia está vacía (no tiene elementos).
 =end
 
+# En el modulo se define un constructor para las clases que lo usan
+# Y la funcion vacio?s que dice si la secuencia esta vacia
+# Ademas las partes de otras funciones que sean iguales entre clases.
+# En el caso de agregar, esta depende totalmente de la clase, asi que si
+# No esta implementado en la clase se devuelve un error.
 module Secuencia
     attr_reader :elementos
     def initialize(elementos = [])
@@ -53,26 +58,8 @@ class Cola
         @elementos.push(elemento)
     end
 
-
     def remover
         super()
         @elementos.shift
     end
 end
-
-# Ejemplo de uso
-pila = Pila.new
-pila.agregar(1)
-pila.agregar(2)
-pila.agregar(3)
-puts pila.remover # => 3
-puts pila.vacio?   # => false
-puts pila
-
-cola = Cola.new
-cola.agregar(1)
-cola.agregar(2)
-cola.agregar(3)
-puts cola.remover # => 1
-puts cola.vacio?   # => false
-puts cola
