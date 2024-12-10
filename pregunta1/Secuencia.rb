@@ -9,7 +9,8 @@ Arroja un error si está vacía.
 =end
 
 module Secuencia
-    def initialize(elementos)
+    attr_reader :elementos
+    def initialize(elementos = [])
         @elementos = elementos
     end
     
@@ -17,10 +18,10 @@ module Secuencia
         raise NotImplementedError
     end
     def remover
-        raise NotImplementedError
+        raise "Secuencia vacia" if vacio?
     end
     def vacio?
-        raise NotImplementedError
+        @elementos.empty?
     end
 end
 
@@ -34,34 +35,44 @@ es el primero en ser removido.
 
 class Pila
     include Secuencia
-    def initialize(elementos = [])
-        super(elementos)
-    end
 
     def agregar(elemento)
         @elementos.push(elemento)
     end
 
     def remover
+        super()
         @elementos.pop
-    end
-
-    def vacio?
-        @elementos.empty?
     end
 end
 
+class Cola
+    include Secuencia
 
+    def agregar(elemento)
+        @elementos.push(elemento)
+    end
+
+
+    def remover
+        super()
+        @elementos.shift
+    end
+end
 
 # Ejemplo de uso
 pila = Pila.new
 pila.agregar(1)
 pila.agregar(2)
-puts pila.remover # => 2
+pila.agregar(3)
+puts pila.remover # => 3
 puts pila.vacio?   # => false
+puts pila
 
 cola = Cola.new
 cola.agregar(1)
 cola.agregar(2)
+cola.agregar(3)
 puts cola.remover # => 1
 puts cola.vacio?   # => false
+puts cola
