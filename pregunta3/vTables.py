@@ -1,4 +1,5 @@
 from funciones import clase_hereda, clase_no_hereda, describir
+# Aqui se maneja el input del usuario
 def main():
 
     print("Bienvenido al programa manejador de tablas virtuales.\n",
@@ -17,7 +18,8 @@ def main():
             else:
                 print("OPCION NO VALIDA\n",
                 "Opciones: CLASS, DESCRIBIR, SALIR.\n")
-   
+
+# Aqui se determina si la clase a crear hereda de otra o no
 def clases(opciones):
     if len(opciones) < 2:
         print("Error: Datos insuficientes para crear una clase.")

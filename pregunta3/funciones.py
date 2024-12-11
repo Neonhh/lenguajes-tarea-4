@@ -1,3 +1,4 @@
+# Guarda los metodos y superclases de cada clase
 class Clase:
     def __init__(self, metodos, superclase = None):
         self.metodos = metodos
@@ -24,6 +25,7 @@ class Clase:
         else:
             return None
 
+# Diccionario de clases definidas con sus respectivos metodos y superclases
 clasesDefinidas = {}
 def clase_hereda(subclase, superclase, metodos):
     
@@ -88,15 +90,10 @@ def describir(clase):
     # Metodos heredados
     metodos_superclases(clasesDefinidas[clase].superclase, clase_descrita.metodos)
 
-
-    #print("Metodo f: ", clasesDefinidas[clase].buscar_metodo("f"))
-    #print("Metodo g: ", clasesDefinidas[clase].buscar_metodo("g"))
-    #print("Metodo h: ", clasesDefinidas[clase].buscar_metodo("h"))
-    #print("Metodo i: ", clasesDefinidas[clase].buscar_metodo("i"))
-
 def existe(nombre_clase):
     return nombre_clase in clasesDefinidas
 
+# Imprime recursivamente los metodos de las superclases que no se hayan impreso ya
 def metodos_superclases(superclase, ya_visto = []):
 
     superclaseObj = clasesDefinidas.get(superclase)
