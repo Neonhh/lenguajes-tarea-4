@@ -6,22 +6,21 @@ class Clase:
     def buscar_metodo(self, metodo):
         if metodo in self.metodos:
             return metodo
-        elif self.superclase != None:
-            return self.superclase.buscar_metodo(metodo)
+        elif clasesDefinidas.get(self.superclase) != None:
+            return clasesDefinidas.get(self.superclase).buscar_metodo(metodo)
         else:
             return None
     
     def buscar_superclase(self, superclase):
-        if self.superclase == superclase:
+        if clasesDefinidas.get(self.superclase) == superclase:
             return self
-        elif self.superclase != None:
-            return self.superclase.buscar_superclase(superclase)
+        elif clasesDefinidas.get(self.superclase) != None:
+            return clasesDefinidas.get(self.superclase).buscar_superclase(superclase)
         else:
             return None
 
 clasesDefinidas = {}
 def clase_hereda(subclase, superclase, metodos):
-    print(f"Creando clase {subclase} que hereda de {superclase} con los metodos {metodos}")
     
     # Debe reportar error si la clase ya existe
     if existe(subclase):
@@ -38,30 +37,44 @@ def clase_hereda(subclase, superclase, metodos):
         print(f"Error: La clase {subclase} ya existe en la jerarquia")
         return
     
-    # Debe reportar error si algun metodo esta repetido en la jerarquia
-    metodos_unicos = set(metodos)
-    for metodo in metodos_unicos:
-        if clasesDefinidas[superclase].buscar_metodo(metodo) != None:
-            print(f"Error: El metodo {metodo} ya existe en la jerarquia")
+    # Debe reportar error si algun metodo esta repetido en la lista
+    conteoMetodos = {}
+    for metodo in metodos:
+        if conteoMetodos.get(metodo) == None:
+            conteoMetodos[metodo] = 1
+        else:
+            print(f"Error: El metodo {metodo} esta repetido")
             return
-    
-    metodos = list(metodos_unicos)
     
     clasesDefinidas[subclase] = Clase(metodos, superclase)
 
 def clase_no_hereda(clase, metodos):
-    print(f"Creando clase {clase} con los metodos {metodos}")
 
     # Debe reportar error si la clase ya existe
     if existe(clase):
         print(f"Error: La clase {clase} ya existe")
         return
     
+    # Debe reportar error si algun metodo esta repetido en la lista
+    conteoMetodos = {}
+    for metodo in metodos:
+        if conteoMetodos.get(metodo) == None:
+            conteoMetodos[metodo] = 1
+        else:
+            print(f"Error: El metodo {metodo} esta repetido")
+            return
+    
     clasesDefinidas[clase] = Clase(metodos)
 
 
 def describir(clase):
     print(f"Describiendo la clase {clase}")
+
+    print("Metodo f: ", clasesDefinidas[clase].buscar_metodo("f"))
+    print("Metodo g: ", clasesDefinidas[clase].buscar_metodo("g"))
+    print("Metodo h: ", clasesDefinidas[clase].buscar_metodo("h"))
+    print("Metodo i: ", clasesDefinidas[clase].buscar_metodo("i"))
+
 
 def existe(nombre_clase):
     return nombre_clase in clasesDefinidas
