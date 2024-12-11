@@ -12,11 +12,6 @@ class Clase:
         else:
             return None
     
-    def buscar_metodo_iterador(self, metodos):
-        if metodos == None: return None
-
-
-    
     def buscar_superclase(self, superclase):
         if clasesDefinidas.get(self.superclase) == superclase:
             return self
