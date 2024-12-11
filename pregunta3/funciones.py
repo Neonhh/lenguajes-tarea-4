@@ -11,6 +11,11 @@ class Clase:
         else:
             return None
     
+    def buscar_metodo_iterador(self, metodos):
+        if metodos == None: return None
+
+
+    
     def buscar_superclase(self, superclase):
         if clasesDefinidas.get(self.superclase) == superclase:
             return self
@@ -68,13 +73,39 @@ def clase_no_hereda(clase, metodos):
 
 
 def describir(clase):
-    print(f"Describiendo la clase {clase}")
 
-    print("Metodo f: ", clasesDefinidas[clase].buscar_metodo("f"))
-    print("Metodo g: ", clasesDefinidas[clase].buscar_metodo("g"))
-    print("Metodo h: ", clasesDefinidas[clase].buscar_metodo("h"))
-    print("Metodo i: ", clasesDefinidas[clase].buscar_metodo("i"))
+    # Debe reportar error si la clase no existe
+    if not existe(clase):
+        print(f"Error: La clase {clase} no existe")
+        return
+    
+    clase_descrita = clasesDefinidas[clase]
 
+    # Metodos definidos en la misma clase
+    for metodo in clase_descrita.metodos:
+        print(f"{metodo} -> {clase} :: {metodo}")
+    
+    # Metodos heredados
+    metodos_superclases(clasesDefinidas[clase].superclase, clase_descrita.metodos)
+
+
+    #print("Metodo f: ", clasesDefinidas[clase].buscar_metodo("f"))
+    #print("Metodo g: ", clasesDefinidas[clase].buscar_metodo("g"))
+    #print("Metodo h: ", clasesDefinidas[clase].buscar_metodo("h"))
+    #print("Metodo i: ", clasesDefinidas[clase].buscar_metodo("i"))
 
 def existe(nombre_clase):
     return nombre_clase in clasesDefinidas
+
+def metodos_superclases(superclase, ya_visto = []):
+
+    superclaseObj = clasesDefinidas.get(superclase)
+
+    if superclaseObj == None: return
+
+    for metodo in superclaseObj.metodos:
+        if metodo not in ya_visto:
+            ya_visto.append(metodo)
+            print(f"{metodo} -> {superclase} :: {metodo}")
+        
+    return metodos_superclases(clasesDefinidas[superclase].superclase, ya_visto)
