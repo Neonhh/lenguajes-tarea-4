@@ -45,3 +45,17 @@ def test_describir_herencia(capsys):
     assert not "metodo5 -> ClaseF :: metodo5" in captured.out
     assert not "metodo1 -> ClaseG :: metodo1" in captured.out
     assert not "metodo3 -> ClaseH :: metodo3" in captured.out
+
+def test_errores(capsys):
+    clase_hereda('ClaseI', 'ClaseJ', ['metodo5']) # La superclase no existe
+    clase_hereda('ClaseNA', 'ClaseF', ['metodo5','metodo6','metodo5']) # Hay un metodo repetido
+    clase_no_hereda('ClaseH', ['metodo1', 'metodo2']) # La clase ya existe
+    clase_no_hereda('ClaseNA', ['metodo6','metodo5','metodo6']) # Hay un metodo repetido
+    describir('ClaseNA') # La clase no existe
+
+    captured = capsys.readouterr()
+    assert "Error: La clase ClaseJ no existe" in captured.out
+    assert "Error: El metodo metodo5 esta repetido" in captured.out
+    assert "Error: La clase ClaseH ya existe" in captured.out
+    assert "Error: El metodo metodo6 esta repetido" in captured.out
+    assert "Error: La clase ClaseNA no existe" in captured.out #Describir

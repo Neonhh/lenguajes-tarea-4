@@ -4,14 +4,6 @@ class Clase:
         self.metodos = metodos
         self.superclase = superclase
         
-    def buscar_metodo(self, metodo):
-        if metodo in self.metodos:
-            return metodo
-        elif clasesDefinidas.get(self.superclase) != None:
-            return clasesDefinidas.get(self.superclase).buscar_metodo(metodo)
-        else:
-            return None
-    
     def buscar_superclase(self, superclase):
         if clasesDefinidas.get(self.superclase) == superclase:
             return self
